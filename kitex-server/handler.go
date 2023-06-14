@@ -11,5 +11,5 @@ type HelloServiceImpl struct{}
 // HelloMethod implements the HelloServiceImpl interface.
 func (s *HelloServiceImpl) HelloMethod(ctx context.Context, request *example.HelloReq) (resp *example.HelloResp, err error) {
 	// TODO: Your code here...
-	return
+    return &example.HelloResp{RespBody: "Hello, " + request.Name}, nil
 }
