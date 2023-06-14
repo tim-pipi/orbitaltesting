@@ -1,4 +1,4 @@
-module example
+module github.com/tim-pipi/orbitaltesting/kitex-server
 
 go 1.20
 

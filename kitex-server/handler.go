@@ -2,14 +2,14 @@ package main
 
 import (
 	"context"
-	api "example/kitex_gen/api"
+	example "github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/hello/example"
 )
 
-// EchoImpl implements the last service interface defined in the IDL.
-type EchoImpl struct{}
+// HelloServiceImpl implements the last service interface defined in the IDL.
+type HelloServiceImpl struct{}
 
-// Echo implements the EchoImpl interface.
-func (s *EchoImpl) Echo(ctx context.Context, req *api.Request) (resp *api.Response, err error) {
+// HelloMethod implements the HelloServiceImpl interface.
+func (s *HelloServiceImpl) HelloMethod(ctx context.Context, request *example.HelloReq) (resp *example.HelloResp, err error) {
 	// TODO: Your code here...
-    return &api.Response{Message: req.Message}, nil
+    return &example.HelloResp{RespBody: "Hello, " + request.Name}, nil
 }

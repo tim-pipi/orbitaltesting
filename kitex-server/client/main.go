@@ -1,27 +1,25 @@
-package main
+package client
 
 import (
-	"context"
-	"log"
-	"time"
+    "context"
+    "log"
+    "time"
 
-	"github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/api"
-	"github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/api/echo"
-	"github.com/cloudwego/kitex/client"
+    "github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/hello/example"
+    "github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/hello"
+    "github.com/cloudwego/kitex/client"
 )
 
 func main() {
-	client, err := hello.NewClient("hello", client.WithHostPorts("0.0.0.0:8888"))
-	if err != nil {
-		log.Fatal(err)
-	}
-	for {
-		req := &api.Request{Message: "my request"}
-		resp, err := client.Echo(context.Background(), req)
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Println(resp)
-		time.Sleep(time.Second)
-	}
+    c, err := example.NewClient("kitex-server", client.WithHostPorts("0.0.0.0:8888"))
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    req := &hello.HelloRequest{Name: "Timothy"}
+    resp, err := c.Echo(context.Background(), req, callopt.WithRPCTimeout(3*time.Second))
+    if err != nil {
+        log.Fatal(err)
+    }
+    log.Println(resp)
 }
