@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/api/echo"
+	api "example/kitex_gen/api/echo"
 	"log"
 )
 
