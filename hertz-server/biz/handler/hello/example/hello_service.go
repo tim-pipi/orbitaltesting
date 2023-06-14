@@ -22,6 +22,7 @@ func HelloMethod(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp := new(example.HelloResp)
+    resp.RespBody = "Hello, " + req.Name
 
 	c.JSON(consts.StatusOK, resp)
 }
