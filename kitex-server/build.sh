@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-RUN_NAME="kitex-server"
+RUN_NAME="example"
 
 mkdir -p output/bin
 cp script/* output/

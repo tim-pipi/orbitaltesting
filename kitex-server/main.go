@@ -1,12 +1,12 @@
 package main
 
 import (
-	example "github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/hello/example/helloservice"
+	api "github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/api/echo"
 	"log"
 )
 
 func main() {
-	svr := example.NewServer(new(HelloServiceImpl))
+	svr := api.NewServer(new(EchoImpl))
 
 	err := svr.Run()
 
