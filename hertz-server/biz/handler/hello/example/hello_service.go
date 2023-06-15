@@ -4,10 +4,16 @@ package example
 
 import (
 	"context"
+	"log"
+	"encoding/json"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	example "github.com/tim-pipi/orbitaltesting/hertz-server/biz/model/hello/example"
+	//example "github.com/tim-pipi/orbitaltesting/hertz-server/biz/model/hello/example"
+
+	"github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/hello/example/helloservice"
+    example "github.com/tim-pipi/orbitaltesting/kitex-server/kitex_gen/hello/example"
+    "github.com/cloudwego/kitex/client"
 )
 
 // HelloMethod .
@@ -15,14 +21,35 @@ import (
 func HelloMethod(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req example.HelloReq
+	
+	body, err := c.Body()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	err = json.Unmarshal(body, &req)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
 
-	resp := new(example.HelloResp)
-    resp.RespBody = "Hello, " + req.Name
+	cli, err := helloservice.NewClient("kitex-server", client.WithHostPorts("0.0.0.0:8888"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	resp, err := cli.HelloMethod(context.Background(), &req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(resp)
 
 	c.JSON(consts.StatusOK, resp)
 }

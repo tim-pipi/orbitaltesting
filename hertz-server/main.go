@@ -7,7 +7,9 @@ import (
 )
 
 func main() {
-	h := server.Default()
+	h := server.Default(
+		server.WithHostPorts("localhost:6969"),
+	)
 
 	register(h)
 	h.Spin()
